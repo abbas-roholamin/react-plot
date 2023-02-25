@@ -3,6 +3,8 @@
 import { Component } from "react";
 
 import "./App.css";
+import { List } from "./components/card";
+import { Input } from "./components/searchbox";
 
 class App extends Component {
   constructor() {
@@ -17,14 +19,9 @@ class App extends Component {
     fetch("https://jsonplaceholder.typicode.com/users")
       .then((response) => response.json())
       .then((users) =>
-        this.setState(
-          () => {
-            return { monsters: users };
-          },
-          () => {
-            console.log(this.state.monsters);
-          }
-        )
+        this.setState(() => {
+          return { monsters: users };
+        })
       );
   }
 
@@ -42,14 +39,9 @@ class App extends Component {
 
     return (
       <div className="App">
-        <input
-          type="text"
-          placeholder="Monster name"
-          onChange={handleSearching}
-        />
-        {filteredMonsters.map((monster) => (
-          <h1 key={monster.id}>{monster.name}</h1>
-        ))}
+        <h1 className="title">monsters rolodex</h1>
+        <Input placeholder="search..." handleOnChnage={handleSearching} />
+        <List monsters={filteredMonsters} />
       </div>
     );
   }
