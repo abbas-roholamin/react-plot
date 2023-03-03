@@ -10,7 +10,7 @@ function index({ categories }) {
   return (
     <div className="categories-container">
       {categories.map((category) => (
-        <Category category={category} />
+        <Category category={category} key={category.id} />
       ))}
     </div>
   );
