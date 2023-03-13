@@ -16,11 +16,10 @@ function index() {
         </NavLink>
       </div>
 
-      <ul className="nav-links">
-        <li className="nav-link">
-          <NavLink to="/shop" label="Shop" />
-        </li>
-      </ul>
+      <div className="nav-links">
+        <NavLink to="/shop" label="Shop" className="nav-link" />
+        <NavLink to="/sign-in" label="Sign-in" className="nav-link" />
+      </div>
     </nav>
   );
 }
