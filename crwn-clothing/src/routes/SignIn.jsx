@@ -5,8 +5,8 @@ import { firebase } from "../utils";
 
 function SignIn() {
   const signIn = async () => {
-    const response = await firebase.SignInWithGooglePopup();
-    console.log(response);
+    const { user } = await firebase.SignInWithGooglePopup();
+    const doc = await firebase.createUserDocumentFromAuth(user);
   };
 
   return (

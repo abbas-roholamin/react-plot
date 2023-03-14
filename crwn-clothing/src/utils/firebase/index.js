@@ -8,6 +8,7 @@ import {
   GoogleAuthProvider,
 } from "firebase/auth";
 
+import { doc, getDoc, setDoc, getFirestore } from "firebase/firestore";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -33,4 +34,26 @@ provider.setCustomParameters({
 const auth = getAuth();
 const SignInWithGooglePopup = () => signInWithPopup(auth, provider);
 
-export default { auth, SignInWithGooglePopup };
+const db = getFirestore();
+const createUserDocumentFromAuth = async (user) => {
+  const userDocRef = doc(db, "users", user.uid);
+
+  const ref = await getDoc(userDocRef);
+
+  if (!ref.exists()) {
+    const { displayName, email } = user;
+    const createdAt = new Date();
+    try {
+      return await setDoc(userDocRef, {
+        displayName,
+        email,
+        createdAt,
+      });
+    } catch (error) {
+      console.log("An error happend!", error);
+    }
+  }
+
+  return userDocRef;
+};
+export default { auth, SignInWithGooglePopup, createUserDocumentFromAuth };
